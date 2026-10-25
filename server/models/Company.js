@@ -1,0 +1,4 @@
+import mongoose from "mongoose";
+const settingsSchema=new mongoose.Schema({officeStart:{type:String,default:"09:00"},officeEnd:{type:String,default:"17:00"},graceMinutes:{type:Number,default:15,min:0,max:120},halfDayHours:{type:Number,default:5,min:1,max:12},weekendDays:{type:[Number],default:[0,6]},latitude:Number,longitude:Number,radiusMeters:{type:Number,default:150,min:1,max:10000}},{_id:false});
+const schema=new mongoose.Schema({name:{type:String,required:true,trim:true,maxlength:120},code:{type:String,required:true,unique:true,match:/^\d{6}$/},status:{type:String,enum:["pending","active","rejected"],default:"pending",index:true},active:{type:Boolean,default:false},settings:{type:settingsSchema,default:()=>({})},reviewedBy:{type:mongoose.Schema.Types.ObjectId,ref:"User"},reviewedAt:Date,reviewNote:{type:String,maxlength:500}},{timestamps:true});
+export default mongoose.model("Company",schema);

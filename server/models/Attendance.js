@@ -1,0 +1,3 @@
+import mongoose from "mongoose";
+const schema=new mongoose.Schema({company:{type:mongoose.Schema.Types.ObjectId,ref:"Company",required:true,index:true},employee:{type:mongoose.Schema.Types.ObjectId,ref:"User",required:true},day:{type:String,required:true},checkIn:Date,checkOut:Date,workedMinutes:Number,status:{type:String,enum:["present","late","half-day","absent","leave","missing-checkout"],default:"present"},correction:{flagged:Boolean,note:String,correctedBy:{type:mongoose.Schema.Types.ObjectId,ref:"User"},correctedAt:Date},settingsSnapshot:mongoose.Schema.Types.Mixed},{timestamps:true});schema.index({company:1,employee:1,day:1},{unique:true});export default mongoose.model("Attendance",schema);
+

@@ -1,0 +1,7 @@
+const money=value=>Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+export function PayrollBreakdown({run,employeeId}){
+ let rows=Array.isArray(run?.metadata?.rows)?run.metadata.rows:[];
+ if(employeeId)rows=rows.filter(row=>String(row.employee?._id||row.employee)===String(employeeId));
+ if(!rows.length)return <p className="hcm-empty">{employeeId?"No payslip row for this employee in this payroll run.":"This payroll run has no employee breakdown rows."}</p>;
+ return <div className="payslip-breakdown"><div className="payslip-breakdown-heading"><b>{employeeId?"Your payslip details":"Employee payslips"}</b><span>{run.metadata?.period||run.name||"Payroll run"} · {rows.length} {rows.length===1?"employee":"employees"}</span></div><div className="payslip-table-wrap"><table className="payslip-table"><thead><tr>{!employeeId&&<th>Employee</th>}<th>Basic</th><th>HRA</th><th>Medical</th><th>Gross</th><th>Absence</th><th>Half days</th><th>Deduction</th><th>Tax</th><th>Net pay</th></tr></thead><tbody>{rows.map((row,index)=><tr key={String(row.employee?._id||row.employee||index)}>{!employeeId&&<th scope="row">{row.name||"Employee"}</th>}<td>{money(row.basic)}</td><td>{money(row.hra)}</td><td>{money(row.medical)}</td><td>{money(row.gross)}</td><td>{row.absenceDays??0}</td><td>{row.halfDays??0}</td><td>{money(row.deduction)}</td><td>{money(row.tax)}</td><td><b>{money(row.net)}</b></td></tr>)}</tbody></table></div></div>
+}

@@ -1,0 +1,4 @@
+import {useCallback,useEffect,useState} from "react";
+import {apiRequest} from "@/lib/api";
+import {AuthContext} from "@/features/auth-context";
+export function AuthProvider({children}){const[user,setUser]=useState(null);const[loading,setLoading]=useState(true);useEffect(()=>{apiRequest("/auth/me").then(({user:u})=>setUser(u)).catch(()=>setUser(null)).finally(()=>setLoading(false));},[]);const signIn=useCallback(async form=>{const data=await apiRequest("/auth/login",{method:"POST",body:form});setUser(data.user);return data.user;},[]);const signInSuperAdmin=useCallback(async form=>{const data=await apiRequest("/auth/super-admin-login",{method:"POST",body:form});setUser(data.user);return data.user;},[]);const signOut=useCallback(async()=>{await apiRequest("/auth/logout",{method:"POST"});setUser(null);},[]);return <AuthContext.Provider value={{user,loading,signIn,signInSuperAdmin,signOut}}>{children}</AuthContext.Provider>;}

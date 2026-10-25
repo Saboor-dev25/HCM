@@ -1,0 +1,3 @@
+import mongoose from "mongoose";
+const schema=new mongoose.Schema({company:{type:mongoose.Schema.Types.ObjectId,ref:"Company",required:true,index:true},employee:{type:mongoose.Schema.Types.ObjectId,ref:"User",required:true},day:{type:String,required:true},requestedCheckIn:Date,requestedCheckOut:Date,reason:{type:String,required:true,maxlength:1000},status:{type:String,enum:["pending","approved","rejected"],default:"pending"},hrComment:{type:String,maxlength:1000},reviewedBy:{type:mongoose.Schema.Types.ObjectId,ref:"User"},reviewedAt:Date},{timestamps:true});
+export default mongoose.model("AttendanceCorrectionRequest",schema);

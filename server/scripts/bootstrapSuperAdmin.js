@@ -1,0 +1,14 @@
+import "dotenv/config";
+import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
+import connectDB from "#config/db";
+import User from "#models/User";
+const name=process.env.SUPER_ADMIN_NAME;
+const email=process.env.SUPER_ADMIN_EMAIL?.trim().toLowerCase();
+const password=process.env.SUPER_ADMIN_PASSWORD;
+if(!name||!email||!password||password.length<14)throw new Error("Set SUPER_ADMIN_NAME, SUPER_ADMIN_EMAIL, and a SUPER_ADMIN_PASSWORD of at least 14 characters before bootstrapping.");
+await connectDB();
+if(await User.exists({role:"SUPER_ADMIN"}))throw new Error("A platform Super Admin already exists.");
+await User.create({name,email,password:await bcrypt.hash(password,12),role:"SUPER_ADMIN",active:true});
+console.log(`Platform Super Admin provisioned: ${email}`);
+await mongoose.disconnect();
