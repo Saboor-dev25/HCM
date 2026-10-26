@@ -10,7 +10,24 @@ Multi-company HR administration built with React/Vite and Express/MongoDB. Each 
 4. Configure `frontend/.env` with `VITE_API_URL=http://localhost:5000/api` if the Vite proxy is not being used, then run `npm run dev` from `frontend/`.
 5. A company administrator submits a company request from the registration tab. They can check the request from the same browser. The company and its admin login remain disabled until the Super Admin approves it. Upon approval, the initial admin is activated and the company code becomes available to the requester.
 
-Environment variables are read from `server/.env`: `PORT` (optional; defaults to 5000), `MONGODB_URI` (required), `MONGODB_DB` (optional database override), `CLIENT_URL` (frontend origin), `JWT_SECRET` (use a long random production secret), `NODE_ENV`, `SUPER_ADMIN_NAME`, `SUPER_ADMIN_EMAIL`, and `SUPER_ADMIN_PASSWORD` (bootstrap only). SMTP settings are optional and used only if mail delivery is configured. Set `VITE_API_URL` in `frontend/.env` to `http://localhost:5000/api` when not using the Vite proxy.
+## Deploy the API to Vercel
+
+The Express app in `app.js` is the Vercel entry point. Create a separate Vercel project for this repository and set **Root Directory** to `server`. Vercel detects the Express app automatically; use the `Other` framework preset, keep the install command as `npm install`, and leave build/output commands empty. Do not use `server.js` as the Vercel entry point because it starts a persistent listener; Vercel invokes the exported Express app as a function.
+
+Add these production environment variables in the Vercel project settings:
+
+- `MONGODB_URI`: a production MongoDB connection string. Allow Vercel deployments to connect in the database provider's network settings.
+- `MONGODB_DB`: optional database name override.
+- `JWT_SECRET`: a long, random production secret.
+- `CLIENT_URL`: the frontend's exact deployed origin, including `https://` and no trailing slash. Multiple allowed origins can be comma-separated.
+- `NODE_ENV`: `production`.
+- `COOKIE_SAME_SITE`: set to `none` when frontend and API are on separate Vercel domains; HTTPS is required for these cookies. Keep `strict` for same-site deployments.
+
+After deploying the API, set `VITE_API_URL` in the frontend Vercel project's production environment to `https://YOUR-API-DOMAIN/api`, then redeploy the frontend. The API health endpoint is `https://YOUR-API-DOMAIN/api/health`. Bootstrap the Super Admin once against the production database by running `npm run bootstrap:super-admin` from `server` with the production database and Super Admin environment variables; do not run the demo data script in production.
+
+The first API request connects to MongoDB, runs the existing schema/index initialization, and then handles the request. Vercel can scale API function instances independently; MongoDB remains the persistent data store.
+
+Environment variables are read from `server/.env`: `PORT` (optional; defaults to 5000), `MONGODB_URI` (required), `MONGODB_DB` (optional database override), `CLIENT_URL` (allowed frontend origin or comma-separated origins), `COOKIE_SAME_SITE` (defaults to `strict`), `JWT_SECRET` (use a long random production secret), `NODE_ENV`, `SUPER_ADMIN_NAME`, `SUPER_ADMIN_EMAIL`, and `SUPER_ADMIN_PASSWORD` (bootstrap only). SMTP settings are optional and used only if mail delivery is configured. Set `VITE_API_URL` in `frontend/.env` to `http://localhost:5000/api` when not using the Vite proxy.
 
 Company roles are resolved from MongoDB. Company users log in with email, password, and the six-digit company code; Super Admins use a separate login path. The API issues an httpOnly same-site cookie, checks account/company status, and scopes company operations to the authenticated user's company. Existing single-company records and legacy indexes are migrated at server startup.
 
