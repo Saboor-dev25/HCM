@@ -7,7 +7,7 @@ export async function apiDownload(endpoint, fallbackName) {
   try {
     response = await fetch(`${API_BASE}${path}`, { credentials: "include" });
   } catch {
-    throw new Error("Could not reach the API. Make sure the backend is running on port 5000.");
+    throw new Error("Could not reach the API. Check VITE_API_URL and the backend CLIENT_URL/CORS settings.");
   }
 
   if (!response.ok) {
@@ -42,12 +42,12 @@ export async function apiRequest(endpoint, options = {}) {
       body: options.body && typeof options.body !== "string" ? JSON.stringify(options.body) : options.body,
     });
   } catch {
-    throw new Error("Could not reach the API. Make sure the backend is running on port 5000.");
+    throw new Error("Could not reach the API. Check VITE_API_URL and the backend CLIENT_URL/CORS settings.");
   }
 
   const contentType = response.headers.get("content-type") || "";
   if (!contentType.includes("application/json")) {
-    throw new Error("The API returned an unexpected response. Check that the backend is running and the Vite API proxy is active.");
+    throw new Error("The API returned an unexpected response. Check that VITE_API_URL points to the API base URL ending in /api.");
   }
   const data = await response.json();
   if (!response.ok) throw new Error(data.message || "The request could not be completed.");
