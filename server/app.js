@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import initializeDatabase from "#config/initializeDatabase";
 import authRoutes from "#routes/authRoutes";
 import adminRoutes from "#routes/adminRoutes";
 import attendanceRoutes from "#routes/attendanceRoutes";
@@ -20,14 +19,6 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json({ limit: "1mb" }));
-app.use(async (req, res, next) => {
-  try {
-    await initializeDatabase();
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
 
 app.get("/api/health", (req, res) => res.json({ message: "API is working" }));
 app.use("/api/auth", authLimiter, authRoutes);
