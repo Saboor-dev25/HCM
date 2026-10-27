@@ -1,0 +1,65 @@
+/* Shared HCM workspace layout refinements */
+.hcm-shell{font-family:var(--font-body,Inter,system-ui,sans-serif)}
+.hcm-metrics article,.hcm-metrics a,.hcm-panel{box-shadow:0 8px 24px #00000012}
+.hcm-table-wrap{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+.hcm-table-wrap .hcm-row{display:grid;grid-template-columns:minmax(155px,1.1fr) minmax(270px,2fr) minmax(125px,.8fr) minmax(115px,.72fr) minmax(115px,.72fr);align-items:center;gap:14px;min-width:980px}
+.hcm-table-wrap .hcm-table-head{grid-template-columns:minmax(155px,1.1fr) minmax(270px,2fr) minmax(125px,.8fr) minmax(115px,.72fr) minmax(115px,.72fr)}
+.hcm-table-wrap .hcm-table-head::after{content:""}
+.hcm-table-wrap .hcm-row:not(.hcm-table-head){min-height:62px}
+.hcm-table-wrap .hcm-row>span{line-height:1.45}
+.hcm-table-wrap .hcm-actions{flex-wrap:wrap}
+.hcm-table-wrap .hcm-action{margin:0;white-space:nowrap}
+.hcm-table-wrap .hcm-table-head span:last-child{text-align:left}
+.payslip-table th:first-child,.payslip-table td:first-child{text-align:left}
+.hcm-top{position:sticky;top:0;z-index:2;backdrop-filter:blur(12px)}
+@media(max-width:650px){.hcm-table-wrap .hcm-row,.hcm-table-wrap .hcm-table-head{min-width:980px}.hcm-content{padding-top:18px}.hcm-panel{border-radius:12px}}
+
+/* Resource and account table layouts */
+.hcm-table-wrap .resource-table-head,.hcm-table-wrap .resource-data-row{display:grid;grid-template-columns:minmax(150px,1fr) minmax(220px,2fr) minmax(140px,auto);align-items:center;gap:16px;min-width:650px!important}
+.hcm-table-wrap .resource-table-head.holiday,.hcm-table-wrap .resource-data-row.holiday{grid-template-columns:minmax(150px,1fr) minmax(180px,1.5fr) minmax(130px,.8fr) minmax(140px,auto)}
+.hcm-table-wrap .resource-table-head::after{content:none}
+.hcm-table-wrap .resource-table-head span:last-child{text-align:left}
+.hcm-table-wrap .resource-data-row .hcm-actions{display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:flex-start;gap:9px;padding:2px 0}
+.hcm-table-wrap .resource-data-row .hcm-actions button{margin:0;min-height:36px;padding:8px 12px;white-space:nowrap}
+.hr-account-table{display:grid;gap:0}
+.hr-account-row{display:grid;grid-template-columns:minmax(140px,1fr) minmax(180px,1.3fr) minmax(110px,.7fr) minmax(140px,auto);align-items:center;gap:14px;padding:13px 8px;border-top:1px solid #282e3a}
+.hr-account-row.hr-account-head{border-top:0;color:#aeb6c6;background:#1b202b;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.hr-more-actions{position:relative;justify-self:start}
+.hr-more-actions summary{cursor:pointer;border:1px solid #3a4050;border-radius:7px;background:#191d27;padding:8px 12px;color:#c7b8ff;white-space:nowrap}
+.hr-actions-menu{position:absolute;right:0;top:calc(100% + 5px);z-index:5;display:grid;min-width:170px;padding:5px;border:1px solid #343a49;border-radius:8px;background:#151821;box-shadow:0 12px 28px #0008}
+.hr-actions-menu button{padding:9px 11px;border:0;border-radius:5px;background:transparent;color:#dfe2eb;text-align:left;cursor:pointer}
+.hr-actions-menu button:hover{background:#ffffff0d}
+.hr-actions-menu .danger-action{color:#ff9b9b}
+.hcm-actions{display:flex;align-items:center;flex-wrap:wrap;gap:9px}
+.hcm-actions button,.hcm-row button,.hcm-title>button{min-height:36px;padding:8px 12px}
+.audit-table{display:grid;min-width:680px}
+.audit-row{display:grid;grid-template-columns:minmax(150px,1fr) minmax(120px,.8fr) minmax(180px,1.1fr) minmax(180px,1.3fr);align-items:start;gap:14px;padding:13px 8px;border-top:1px solid #282e3a;overflow-wrap:anywhere}
+.audit-head{border-top:0;color:#aeb6c6;background:#1b202b;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.audit-row:not(.audit-head)>span{color:#a5adbd}
+@media(max-width:650px){.hr-account-table,.audit-table{overflow-x:auto}.hr-account-row{min-width:640px}}
+
+/* HR and employee dashboard refinements */
+.hcm-breadcrumb{display:flex;align-items:center;justify-content:flex-start;gap:10px;color:#a6adbd;font-size:13px;font-weight:500}
+.hcm-breadcrumb i{color:#626a7b;font-style:normal;font-size:12px}
+.hcm-breadcrumb b{color:#e0e3eb;font-size:13px;font-weight:600}
+.employee-overview-metrics{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.employee-overview-metrics a{padding:14px}
+.employee-overview-metrics small{font-size:11px}
+.employee-overview-metrics strong{margin-top:9px;font-size:18px;line-height:1.3;letter-spacing:-.2px}
+.profile-contact .profile-section-heading{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.profile-contact .profile-section-heading .hcm-action{min-height:36px;padding:8px 12px;white-space:nowrap}
+.hcm-panel#attendance>.hcm-actions{gap:10px;padding:5px 0 15px;margin-bottom:5px;border-bottom:1px solid #282e3b}
+.hcm-panel#attendance>.hcm-actions button{min-height:39px;padding:9px 14px}
+.hcm-panel#leaves>form{padding-bottom:18px;margin-bottom:16px;border-bottom:1px solid #282e3b}
+.hcm-panel#leaves>form .hcm-button{min-height:40px;padding:10px 15px}
+.employee-board-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.employee-board-card{min-width:0;padding:15px;border:1px solid #2b3040;border-radius:9px;background:#10131b}
+.employee-board-card h3{margin:0 0 8px;color:#e4e6ee;font-size:14px}
+.employee-board-card time{display:inline-block;margin-bottom:9px;color:#a99ae0;font-size:11px}
+.employee-board-card p{margin:0;color:#aeb5c4;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.hr-audit-table{width:100%;overflow-x:auto}
+.hr-audit-row{display:grid;grid-template-columns:minmax(160px,1fr) minmax(140px,.8fr) minmax(200px,1fr);align-items:center;gap:14px;min-width:560px;padding:13px 10px;border-top:1px solid #292e3b}
+.hr-audit-head{border-top:0;background:#1b202b;color:#aeb6c6;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.hr-audit-row:not(.hr-audit-head)>span{color:#a5adbd}
+@media(max-width:800px){.employee-overview-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.employee-overview-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.employee-overview-metrics strong{font-size:17px}.profile-contact .profile-section-heading{align-items:flex-start;flex-direction:column}.hcm-panel#attendance>.hcm-actions{padding-bottom:14px}}

@@ -10,7 +10,7 @@ router.patch("/resources/:id",allowRoles("ADMIN"),c.resourceUpdate);
 router.delete("/resources/:id",allowRoles("ADMIN"),c.resourceDelete);
 router.patch("/settings",allowRoles("ADMIN"),c.settings);
 router.post("/company-code/regenerate",allowRoles("ADMIN"),c.rotateCode);
-router.get("/hr",allowRoles("ADMIN"),c.hrList);router.post("/hr",allowRoles("ADMIN"),c.hrCreate);router.patch("/hr/:id/status",allowRoles("ADMIN"),c.hrStatus);router.post("/hr/:id/reset-password",allowRoles("ADMIN"),c.hrReset);
+router.get("/hr",allowRoles("ADMIN"),c.hrList);router.post("/hr",allowRoles("ADMIN"),c.hrCreate);router.patch("/hr/:id/status",allowRoles("ADMIN"),c.hrStatus);router.delete("/hr/:id",allowRoles("ADMIN"),c.hrDelete);router.post("/hr/:id/reset-password",allowRoles("ADMIN"),c.hrReset);
 router.get("/audit",allowRoles("ADMIN"),c.audit);router.post("/payroll/drafts",allowRoles("ADMIN"),c.payrollDraft);router.post("/payroll/:id/finalize",allowRoles("ADMIN"),c.finalizePayroll);
 export default router;
 
